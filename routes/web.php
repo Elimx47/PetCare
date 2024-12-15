@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdoptionController;
 
 
@@ -42,9 +43,14 @@ Route::middleware('isUser:user')->group(function () {
     Route::post('/submit-adoption', [AdoptionController::class, 'submit'])->name('submit.adoption');
 
     Route::get('/adoption-application', [AdoptionController::class, 'viewAdoptionApplications'])->name('user.adoption.applications');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::patch('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
 });
 
-// Admin routes 
+// Admin routes
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -89,6 +95,8 @@ Route::middleware([
 
     Route::patch('/admin/adoptions/{id}/reject', [AdoptionController::class, 'rejectAdoption'])
         ->name('admin.adoption.reject');
+
+
 });
 
 Route::get('/home', [LoginController::class, 'index'])->name('home');

@@ -62,4 +62,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    // Method to ensure a cart exists for the user
+    public function getOrCreateCart()
+    {
+        return $this->cart()->firstOrCreate([]);
+    }
 }
