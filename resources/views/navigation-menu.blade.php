@@ -27,6 +27,9 @@
                     <x-nav-link href="{{ route('admin.adoption.manage') }}" :active="request()->routeIs('admin.adoption.manage')">
                         {{ __('Manage Adoption Applications') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('admin.orders.index') }}" :active="request()->routeIs('admin.orders.index')">
+                        {{ __('Manage Orders') }}
+                    </x-nav-link>
                 </div>
             </div>
 

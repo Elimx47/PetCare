@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -100,6 +101,15 @@ Route::middleware([
 
     Route::patch('/admin/adoptions/{id}/reject', [AdoptionController::class, 'rejectAdoption'])
         ->name('admin.adoption.reject');
+
+        Route::get('/admin/orders', [AdminOrderController::class, 'index'])
+         ->name('admin.orders.index');
+
+    Route::get('/admin/orders/{id}', [AdminOrderController::class, 'show'])
+         ->name('admin.orders.show');
+
+    Route::patch('/admin/orders/{id}/update-status', [AdminOrderController::class, 'updateStatus'])
+         ->name('admin.orders.update-status');
 
 
 });
