@@ -140,6 +140,13 @@
                 <ul class="navbar-nav ml-auto">
                     @if (Route::has('login'))
                     @auth
+                    <li class="nav-item me-2">
+                        <a href="{{ route('cart.index') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger ms-1">{{ $cartItemCount }}</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
@@ -153,6 +160,10 @@
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
                                 <i class="fa-solid fa-paw me-2"></i> Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.orders') }}">
+                                <i class="fas fa-receipt me-2"></i> My Orders
                             </a>
 
                             <!-- Logout Button -->

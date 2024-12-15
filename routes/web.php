@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PetController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdoptionController;
 
@@ -48,6 +49,10 @@ Route::middleware('isUser:user')->group(function () {
     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
     Route::patch('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
+
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+    Route::get('/order/{id}/confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
+    Route::get('/my-orders', [OrderController::class, 'userOrders'])->name('user.orders');
 });
 
 // Admin routes

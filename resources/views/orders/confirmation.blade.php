@@ -1,53 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetCare - Adopt {{ $pets->name }}</title>
+    <title>PetCare - Order Confirmation</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <!-- Custom CSS -->
     <style>
-        .hero-section {
-            background-color: lightblue;
-            background-size: cover;
-            height: 300px;
-            position: relative;
-        }
-
-        .pet-card {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .pet-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .pet-img {
-            height: 250px;
-            object-fit: cover;
-        }
-
+        /* Copy the styles from the cart index page */
         .navbar {
             background-color: #f7f7f7;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 1rem 2rem;
-        }
-
-        .dropdown-menu {
-            padding: 0.5rem;
-        }
-
-        .dropdown-item {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-        }
-
-        .dropdown-item:hover {
-            background-color: lightgreen;
         }
 
         .navbar-brand {
@@ -65,31 +31,35 @@
             color: #333;
         }
 
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        .hero-section {
+            background: url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            height: 300px;
+            position: relative;
         }
-
-        .pet-details-section {
-            padding: 5rem 0;
-        }
-
-        .pet-details img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-
 
         .hero-content {
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 2rem;
             border-radius: 10px;
         }
+
+        .dropdown-menu {
+            padding: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .dropdown-item:hover {
+            background-color: lightgreen;
+        }
     </style>
 </head>
-
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (copied from cart index page) -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">
@@ -102,10 +72,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('welcome') }}">Home</a>
+                        <a class="nav-link" href="{{ route('welcome') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('pet-adopt') }}">Adoption</a>
+                        <a class="nav-link" href="{{ route('pet-adopt') }}">Adoption</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('medication') }}">Medication</a>
@@ -167,8 +137,6 @@
                     @endauth
                     @endif
                 </ul>
-
-
             </div>
         </div>
     </nav>
@@ -179,50 +147,67 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="hero-content">
-                        <h1 class="display-4 fw-bold">Adopt {{ $pets->name }}</h1>
-                        <p class="lead">Meet {{ $pets->name }}, a lovely {{ $pets->breed }} who is looking for a forever home.</p>
+                        <h1 class="display-4 fw-bold">Order Confirmation</h1>
+                        <p class="lead">Thank you for your purchase</p>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Pet Details Section -->
-    <section class="pet-details-section">
+    <!-- Order Confirmation Section -->
+    <section class="py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="{{ Str::startsWith($pets->image, 'http') ? $pets->image : ($pets->image ? asset('storage/' . $pets->image) : asset('images/default-pet.jpg')) }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ $pets->name }}">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <div class="alert alert-success">
+                                <h4>Thank you for your order!</h4>
+                                <p>Your order has been successfully placed.</p>
+                            </div>
 
-                </div>
-                <div class="col-md-6">
-                    <h1 class="mb-4">{{ $pets->name }}</h1>
-                    <p><strong>Breed:</strong> {{ $pets->breed }}</p>
-                    <p><strong>Age:</strong> {{ $pets->age }} {{ $pets->age > 1 ? 'years' : 'year' }}</p>
-                    <p><strong>Gender:</strong> {{ $pets->gender }}</p>
+                            <div class="mb-4">
+                                <h5>Order Details</h5>
+                                <p><strong>Order ID:</strong> {{ $order->id }}</p>
+                                <p><strong>Total Amount:</strong> ₱{{ number_format($order->total_amount, 2) }}</p>
+                                <p><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
+                                <p><strong>Shipping Address:</strong> {{ $order->shipping_address }}</p>
+                            </div>
 
-                    <p><strong>Health:</strong> {{ $pets->health }}</p>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Medication</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($order->orderItems as $item)
+                                    <tr>
+                                        <td>{{ $item->medication_name }}</td>
+                                        <td>₱{{ number_format($item->price, 2) }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>₱{{ number_format($item->price * $item->quantity, 2) }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
-                    <h4 class="mt-4">About {{ $pets->name }}</h4>
-                    <p>{{ $pets->description }}</p>
-                    @if ($pets->hasApplied)
-                    <button class="btn btn-secondary btn-lg adopt-btn mt-4" disabled>Already Applied</button>
-                    @else
-                    <button type="button"
-                        class="btn btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#adoptPetModal{{ $pets->id }}"
-                        onclick="document.getElementById('petId').value = '{{ $pets->id }}'">
-                        Adopt
-                    </button>
-                    @include('components.adoption-modal', ['pet' => $pets])
-                    @endif
+                            <div class="text-center mt-4">
+                                <a href="{{ route('medication') }}" class="btn btn-primary me-2">Continue Shopping</a>
+                                <a href="{{ route('user.orders') }}" class="btn btn-secondary">View My Orders</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (copied from cart index page) -->
     <footer class="bg-dark text-white py-4">
         <div class="container">
             <div class="row">
@@ -259,15 +244,5 @@
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    @if ($errors->any())
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Open the existing modal
-            var adoptPetModal = new bootstrap.Modal(document.getElementById('adoptPetModal{{ $pets->id }}'));
-            adoptPetModal.show();
-        });
-    </script>
-    @endif
 </body>
-
 </html>

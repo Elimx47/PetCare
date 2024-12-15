@@ -73,4 +73,10 @@ class User extends Authenticatable
     {
         return $this->cart()->firstOrCreate([]);
     }
+
+    public function getCartCount()
+    {
+        $cart = $this->getOrCreateCart();
+        return $cart ? $cart->items()->count() : 0;
+    }
 }

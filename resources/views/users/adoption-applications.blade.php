@@ -138,12 +138,20 @@
                 <ul class="navbar-nav ml-auto">
                     @if (Route::has('login'))
                     @auth
+                    <li class="nav-item me-2">
+                        <a href="{{ route('cart.index') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger ms-1">{{ $cartItemCount }}</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <!-- Profile Page Link -->
                             <a class="dropdown-item" href="{{ route('userProfile') }}">
                                 <i class="fas fa-user me-2"></i> Profile
                             </a>
@@ -152,6 +160,11 @@
                                 <i class="fa-solid fa-paw me-2"></i> Pets
                             </a>
 
+                            <a class="dropdown-item" href="{{ route('user.orders') }}">
+                                <i class="fas fa-receipt me-2"></i> My Orders
+                            </a>
+
+                            <!-- Logout Button -->
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
                                 <button type="submit" class="dropdown-item">
@@ -218,9 +231,9 @@
                                 <td>{{ $application->created_at->format('M d, Y') }}</td>
                                 <td>
                                     <h5><span class="badge rounded-pill
-                                        @if($application->status == 'Pending') text-bg-warning 
-                                        @elseif($application->status == 'Approved') text-bg-success 
-                                        @elseif($application->status == 'Rejected') text-bg-danger 
+                                        @if($application->status == 'Pending') text-bg-warning
+                                        @elseif($application->status == 'Approved') text-bg-success
+                                        @elseif($application->status == 'Rejected') text-bg-danger
                                         @endif ">
                                             {{ $application->status }}
                                         </span></h5>

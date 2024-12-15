@@ -104,12 +104,41 @@
                 <ul class="navbar-nav ml-auto">
                     @if (Route::has('login'))
                     @auth
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="nav-link btn btn-link" style="text-decoration: none;">
-                            Logout
-                        </button>
-                    </form>
+                    <li class="nav-item me-2">
+                        <a href="{{ route('cart.index') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger ms-1">{{ $cartItemCount }}</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }}
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <!-- Profile Page Link -->
+                            <a class="dropdown-item" href="{{ route('userProfile') }}">
+                                <i class="fas fa-user me-2"></i> Profile
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('userPets') }}">
+                                <i class="fa-solid fa-paw me-2"></i> Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.orders') }}">
+                                <i class="fas fa-receipt me-2"></i> My Orders
+                            </a>
+
+                            <!-- Logout Button -->
+                            <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
                     @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Log in</a>

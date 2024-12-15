@@ -3,6 +3,7 @@
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\IsUserOrGuest;
 use App\Http\Middleware\User;
+use App\Http\Middleware\CartCountMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,11 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->web(CartCountMiddleware::class);
         $middleware->alias([
             'isAdmin' => Admin::class,
             'isUser' => User::class,
-            'isUserOrGuest' => IsUserOrGuest::class
+            'isUserOrGuest' => IsUserOrGuest::class,
+            'CartCountMiddleware' => CartCountMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

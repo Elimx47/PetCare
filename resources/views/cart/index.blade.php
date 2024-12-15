@@ -106,6 +106,13 @@
                 <ul class="navbar-nav ml-auto">
                     @if (Route::has('login'))
                     @auth
+                    <li class="nav-item me-2">
+                        <a href="{{ route('cart.index') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger ms-1">{{ $cart->items->count() }}</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
@@ -119,6 +126,10 @@
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
                                 <i class="fa-solid fa-paw me-2"></i> Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.orders') }}">
+                                <i class="fas fa-receipt me-2"></i> My Orders
                             </a>
 
                             <!-- Logout Button -->
@@ -207,6 +218,7 @@
                             </div>
                         @endforeach
                     </div>
+                    @if(!$cart->items->isEmpty())
                     <div class="col-md-4">
                         <div class="card shadow">
                             <div class="card-body">
@@ -219,12 +231,32 @@
                                     <span>Total Cost:</span>
                                     <strong>₱{{ number_format($cart->total, 2) }}</strong>
                                 </div>
-                                <button class="btn btn-success w-100">
-                                    <i class="fas fa-shopping-cart me-2"></i> Proceed to Checkout
-                                </button>
+
+                                <form action="{{ route('order.checkout') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="payment_method" class="form-label">Payment Method</label>
+                                        <select name="payment_method" id="payment_method" class="form-select" required>
+                                            <option value="">Select Payment Method</option>
+                                            <option value="cash">Cash on Delivery</option>
+                                            <option value="credit_card">Credit Card</option>
+                                            <option value="paypal">PayPal</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="shipping_address" class="form-label">Shipping Address</label>
+                                        <textarea name="shipping_address" id="shipping_address" class="form-control" required></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="fas fa-shopping-cart me-2"></i> Place Order
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             @endif
         </div>
