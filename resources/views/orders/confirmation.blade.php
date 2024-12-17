@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,6 +59,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation Bar (copied from cart index page) -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -109,7 +111,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
@@ -188,9 +194,9 @@
                                     @foreach($order->orderItems as $item)
                                     <tr>
                                         <td>{{ $item->medication_name }}</td>
-                                        <td>₱{{ number_format($item->price, 2) }}</td>
+                                        <td>Php {{ number_format($item->price, 2) }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>₱{{ number_format($item->price * $item->quantity, 2) }}</td>
+                                        <td>Php {{ number_format($item->price * $item->quantity, 2) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -245,4 +251,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
+
 </html>

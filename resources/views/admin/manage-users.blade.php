@@ -5,7 +5,19 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h1 class="text-3xl font-semibold mb-4 text-gray-800">Manage Users</h1>
+                        @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @endif
 
+                        @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @endif
 
 
                         <div class="table-responsive">
@@ -30,15 +42,18 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->created_at->diffForHumans()}}</td>
                                         <td class="text-center">
-                                            <button class="btn btn-info btn-sm" title="Show Details">
+                                            <a href="{{ route('userDetails', $user->id) }}" class="btn btn-info btn-sm" title="Show Details">
                                                 <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-warning btn-sm" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" title="Delete">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            </a>
+                                            @if($user->role === 'user')
+                                            <form action="{{ route('deleteUser', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                            @endif
                                         </td>
                                         <td class="text-center">
                                             <span class="badge bg-{{ $user->role === 'admin' ? 'success' : 'secondary' }}">

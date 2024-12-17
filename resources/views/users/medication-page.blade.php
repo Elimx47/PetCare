@@ -124,7 +124,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
@@ -221,14 +225,14 @@
                             <p class="card-text">Antibiotic for various bacterial infections</p>
                             <p class="card-text"><strong>Price:</strong> Php 125.00</p>
                             <a href="#" class="btn btn-success" onclick="event.preventDefault(); document.getElementById('add-to-cart-amoxicillin').submit();">Add to Cart</a>
-                        <form id="add-to-cart-amoxicillin" action="{{ route('cart.add') }}" method="POST" style="display: none;">
-                            @csrf
-                            <input type="hidden" name="medication_name" value="Amoxicillin">
-                            <input type="hidden" name="price" value="125.00">
-                            <input type="hidden" name="medication_type" value="amoxicillin">
-                            <input type="hidden" name="image_url" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR7OO51ctn4ORv9sGN_yIQz5m6yT_H2Aiu8Q&s">
-                            <input type="hidden" name="quantity" value="1">
-                        </form>
+                            <form id="add-to-cart-amoxicillin" action="{{ route('cart.add') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="medication_name" value="Amoxicillin">
+                                <input type="hidden" name="price" value="125.00">
+                                <input type="hidden" name="medication_type" value="amoxicillin">
+                                <input type="hidden" name="image_url" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR7OO51ctn4ORv9sGN_yIQz5m6yT_H2Aiu8Q&s">
+                                <input type="hidden" name="quantity" value="1">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -241,14 +245,14 @@
                             <p class="card-text">Flea and tick treatment for dogs</p>
                             <p class="card-text"><strong>Price:</strong> Php 245.00</p>
                             <a href="#" class="btn btn-success" onclick="event.preventDefault(); document.getElementById('add-to-cart-bravecto').submit();">Add to Cart</a>
-                        <form id="add-to-cart-bravecto" action="{{ route('cart.add') }}" method="POST" style="display: none;">
-                            @csrf
-                            <input type="hidden" name="medication_name" value="Bravecto">
-                            <input type="hidden" name="price" value="245.00">
-                            <input type="hidden" name="medication_type" value="bravecto">
-                            <input type="hidden" name="image_url" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6gK8wU3NuUNZqgpe2XvdY3-jUnC865G1xHw&s">
-                            <input type="hidden" name="quantity" value="1">
-                        </form>
+                            <form id="add-to-cart-bravecto" action="{{ route('cart.add') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="medication_name" value="Bravecto">
+                                <input type="hidden" name="price" value="245.00">
+                                <input type="hidden" name="medication_type" value="bravecto">
+                                <input type="hidden" name="image_url" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6gK8wU3NuUNZqgpe2XvdY3-jUnC865G1xHw&s">
+                                <input type="hidden" name="quantity" value="1">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -261,14 +265,14 @@
                             <p class="card-text">Flea and tick treatment for cats and dogs</p>
                             <p class="card-text"><strong>Price:</strong> Php 335.00</p>
                             <a href="#" class="btn btn-success" onclick="event.preventDefault(); document.getElementById('add-to-cart-frontlineplus').submit();">Add to Cart</a>
-                        <form id="add-to-cart-frontlineplus" action="{{ route('cart.add') }}" method="POST" style="display: none;">
-                            @csrf
-                            <input type="hidden" name="medication_name" value="Frontline Plus">
-                            <input type="hidden" name="price" value="335.00">
-                            <input type="hidden" name="medication_type" value="frontlineplus">
-                            <input type="hidden" name="image_url" value="https://frontlinepetcare.com.ph/sites/default/files/2022-11/product-frontline-dogs_3.jpg">
-                            <input type="hidden" name="quantity" value="1">
-                        </form>
+                            <form id="add-to-cart-frontlineplus" action="{{ route('cart.add') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="medication_name" value="Frontline Plus">
+                                <input type="hidden" name="price" value="335.00">
+                                <input type="hidden" name="medication_type" value="frontlineplus">
+                                <input type="hidden" name="image_url" value="https://frontlinepetcare.com.ph/sites/default/files/2022-11/product-frontline-dogs_3.jpg">
+                                <input type="hidden" name="quantity" value="1">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -281,14 +285,14 @@
                             <p class="card-text">Antibiotic for bacterial infections</p>
                             <p class="card-text"><strong>Price:</strong> Php 128.00</p>
                             <a href="#" class="btn btn-success" onclick="event.preventDefault(); document.getElementById('add-to-cart-doxycycline').submit();">Add to Cart</a>
-                        <form id="add-to-cart-doxycycline" action="{{ route('cart.add') }}" method="POST" style="display: none;">
-                            @csrf
-                            <input type="hidden" name="medication_name" value="Doxycycline">
-                            <input type="hidden" name="price" value="128.00">
-                            <input type="hidden" name="medication_type" value="doxycycline">
-                            <input type="hidden" name="image_url" value="https://supertails.com/cdn/shop/files/Pharmacy_91_162a28e8-daa5-4476-bd04-143b9835efa5.png?v=1696448979">
-                            <input type="hidden" name="quantity" value="1">
-                        </form>
+                            <form id="add-to-cart-doxycycline" action="{{ route('cart.add') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="medication_name" value="Doxycycline">
+                                <input type="hidden" name="price" value="128.00">
+                                <input type="hidden" name="medication_type" value="doxycycline">
+                                <input type="hidden" name="image_url" value="https://supertails.com/cdn/shop/files/Pharmacy_91_162a28e8-daa5-4476-bd04-143b9835efa5.png?v=1696448979">
+                                <input type="hidden" name="quantity" value="1">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -301,14 +305,14 @@
                             <p class="card-text">Anti-inflammatory and immunosuppressant</p>
                             <p class="card-text"><strong>Price:</strong> Php 220.00</p>
                             <a href="#" class="btn btn-success" onclick="event.preventDefault(); document.getElementById('add-to-cart-prednisons').submit();">Add to Cart</a>
-                        <form id="add-to-cart-prednisons" action="{{ route('cart.add') }}" method="POST" style="display: none;">
-                            @csrf
-                            <input type="hidden" name="medication_name" value="Prednisons">
-                            <input type="hidden" name="price" value="220.00">
-                            <input type="hidden" name="medication_type" value="prednisons">
-                            <input type="hidden" name="image_url" value="https://cdn.mos.cms.futurecdn.net/m8xQaU8ZnvPfq8xiiU5RtW-1200-80.jpg">
-                            <input type="hidden" name="quantity" value="1">
-                        </form>
+                            <form id="add-to-cart-prednisons" action="{{ route('cart.add') }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="medication_name" value="Prednisons">
+                                <input type="hidden" name="price" value="220.00">
+                                <input type="hidden" name="medication_type" value="prednisons">
+                                <input type="hidden" name="image_url" value="https://cdn.mos.cms.futurecdn.net/m8xQaU8ZnvPfq8xiiU5RtW-1200-80.jpg">
+                                <input type="hidden" name="quantity" value="1">
+                            </form>
                         </div>
                     </div>
                 </div>

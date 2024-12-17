@@ -7,12 +7,12 @@
                         <h1 class="text-3xl font-semibold mb-4 text-gray-800">Manage Orders</h1>
 
                         <!-- Search Bar -->
-                        <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex justify-content-end align-items-end mb-4">
                             <form action="{{ route('admin.orders.index') }}" method="GET" class="col-md-6">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control form-control"
-                                           placeholder="Search orders by ID, user name, email, or status..."
-                                           value="{{ request('search') }}">
+                                        placeholder="Search orders by ID, user name, email, or status..."
+                                        value="{{ request('search') }}">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="bi bi-search"></i> Search
                                     </button>
@@ -52,12 +52,12 @@
                                     <tr>
                                         <td>{{ $order->id }}</td>
                                         <td>{{ $order->user->name }}</td>
-                                        <td>${{ number_format($order->total_amount, 2) }}</td>
+                                        <td>Php {{ number_format($order->total_amount, 2) }}</td>
                                         <td>{{ $order->payment_method }}</td>
                                         <td class="text-center">
                                             <span class="badge bg-{{
-                                                $order->status === 'Delivered' ? 'success' :
-                                                ($order->status === 'Cancelled' ? 'danger' : 'secondary')
+                                                $order->status === 'completed' ? 'success' :
+                                                ($order->status === 'cancelled' ? 'danger' : 'warning')
                                             }}">
                                                 {{ $order->status }}
                                             </span>
@@ -65,7 +65,7 @@
                                         <td>{{ $order->created_at->diffForHumans() }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('admin.orders.show', $order->id) }}"
-                                               class="btn btn-info btn-sm" title="View Details">
+                                                class="btn btn-info btn-sm" title="View Details">
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                         </td>

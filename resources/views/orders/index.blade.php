@@ -119,7 +119,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
@@ -169,65 +173,64 @@
     <section class="py-5">
         <div class="container">
             @if($orders->isEmpty())
-                <div class="alert alert-info text-center">
-                    <h3>No Orders Yet</h3>
-                    <p>You have not placed any orders yet. <a href="{{ route('medication') }}" class="alert-link">Start shopping now!</a></p>
-                </div>
+            <div class="alert alert-info text-center">
+                <h3>No Orders Yet</h3>
+                <p>You have not placed any orders yet. <a href="{{ route('medication') }}" class="alert-link">Start shopping now!</a></p>
+            </div>
             @else
-                @foreach($orders as $order)
-                <div class="card mb-3 shadow order-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>
-                            <strong>Order #{{ $order->id }}</strong>
-                            <span class="badge
-                                {{ $order->status == 'pending' ? 'bg-warning' :
-                                   ($order->status == 'processing' ? 'bg-info' :
-                                   ($order->status == 'completed' ? 'bg-success' : 'bg-danger')) }}">
-                                {{ ucfirst($order->status) }}
-                            </span>
+            @foreach($orders as $order)
+            <div class="card mb-3 shadow order-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>
+                        <strong>Order #{{ $order->id }}</strong>
+                        <span class="badge
+                            {{ $order->status == 'pending' ? 'bg-warning' :
+                                ($order->status == 'completed' ? 'bg-success' : 'bg-danger') }}">
+                            {{ ucfirst($order->status) }}
                         </span>
-                        <small>{{ $order->created_at->format('F d, Y H:i') }}</small>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5>Order Details</h5>
-                                <p><strong>Total Amount:</strong> ₱{{ number_format($order->total_amount, 2) }}</p>
-                                <p><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h5>Shipping Address</h5>
-                                <p>{{ $order->shipping_address }}</p>
-                            </div>
+                    </span>
+                    <small>{{ $order->created_at->format('F d, Y H:i') }}</small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Order Details</h5>
+                            <p><strong>Total Amount:</strong>Php {{ number_format($order->total_amount, 2) }}</p>
+                            <p><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
                         </div>
-
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Medication</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($order->orderItems as $item)
-                                <tr>
-                                    <td>{{ $item->medication_name }}</td>
-                                    <td>₱{{ number_format($item->price, 2) }}</td>
-                                    <td>{{ $item->quantity }}</td>
-                                    <td>₱{{ number_format($item->price * $item->quantity, 2) }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="col-md-6">
+                            <h5>Shipping Address</h5>
+                            <p>{{ $order->shipping_address }}</p>
+                        </div>
                     </div>
-                </div>
-                @endforeach
 
-                <div class="d-flex justify-content-center">
-                    {{ $orders->links() }}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Medication</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($order->orderItems as $item)
+                            <tr>
+                                <td>{{ $item->medication_name }}</td>
+                                <td>Php {{ number_format($item->price, 2) }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>₱{{ number_format($item->price * $item->quantity, 2) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+            @endforeach
+
+            <div class="d-flex justify-content-center">
+                {{ $orders->links() }}
+            </div>
             @endif
         </div>
     </section>

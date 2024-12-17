@@ -208,7 +208,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Adoption;
 
+use App\Models\Pet;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +14,13 @@ class AdoptionController extends Controller
 {
     public function submit(Request $request)
     {
+        $pet = Pet::findOrFail($request->input('pet_id'));
+
+        // Check if the user is the pet's original uploader
+        if ($pet->user_id === Auth::user()->id) {
+            return redirect()->back()->with('error', 'You cannot adopt a pet you have uploaded.');
+        }
+
         $validated = $request->validate([
             'pet_id' => 'required|exists:pets,id',
             'full_name' => 'required|string|max:255',
@@ -105,5 +114,23 @@ class AdoptionController extends Controller
         $application->save();
 
         return redirect()->back()->with('success', 'Adoption application rejected.');
+    }
+
+    public function cancelApplication($id)
+    {
+        $user = Auth::user();
+        $application = Adoption::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        // Only allow cancellation of pending applications
+        if ($application->status !== 'Pending') {
+            return redirect()->back()->with('error', 'You can only cancel pending applications.');
+        }
+
+        // Delete the application
+        $application->delete();
+
+        return redirect()->route('pet-adopt')->with('success', 'Adoption application cancelled successfully.');
     }
 }

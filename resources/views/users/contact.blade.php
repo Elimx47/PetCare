@@ -163,13 +163,16 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
                                 <i class="fas fa-receipt me-2"></i> My Orders
                             </a>
-
                             <!-- Logout Button -->
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
@@ -215,60 +218,68 @@
     <section class="contact-section">
         <div class="container">
             <div class="row mb-5">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-12">
                     <div class="contact-card">
                         <div class="card-body">
-                            <h3 class="card-title text-success mb-4">Contact Information</h3>
-                            <ul class="list-unstyled">
-                                <li class="mb-3"><i class="fas fa-map-marker-alt me-2 text-success"></i> 123 Pet Street, Anytown, ST 12345</li>
-                                <li class="mb-3"><i class="fas fa-phone me-2 text-success"></i> (123) 456-7890</li>
-                                <li class="mb-3"><i class="fas fa-envelope me-2 text-success"></i> info@petcare.com</li>
-                                <li class="mb-3"><i class="fas fa-clock me-2 text-success"></i> Mon-Fri: 9am-6pm, Sat: 10am-4pm</li>
-                            </ul>
-                            <h4 class="mt-4 mb-3">Follow Us</h4>
-                            <div class="social-icons">
-                                <a href="#" class="me-3 text-success"><i class="fab fa-facebook-f fa-lg"></i></a>
-                                <a href="#" class="me-3 text-success"><i class="fab fa-twitter fa-lg"></i></a>
-                                <a href="#" class="me-3 text-success"><i class="fab fa-instagram fa-lg"></i></a>
-                                <a href="#" class="text-success"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title text-success mb-4">Contact Us</h3>
+                                    <div class="card mb-4">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <i class="fas fa-map-marker-alt me-3 text-success fa-lg"></i>
+                                                <span>123 Pet Street, Anytown, ST 12345</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <i class="fas fa-phone me-3 text-success fa-lg"></i>
+                                                <span>(123) 456-7890</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <i class="fas fa-envelope me-3 text-success fa-lg"></i>
+                                                <span>info@petcare.com</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <i class="fas fa-clock me-3 text-success fa-lg"></i>
+                                                <span>Mon-Fri: 9am-6pm, Sat: 10am-4pm</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="card-title text-success mb-4">Follow Us</h3>
+                                    <div class="card mb-4">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <a href="#" class="me-4 text-success"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                                <span class="align-middle">Follow us on Facebook</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <a href="#" class="me-4 text-success"><i class="fab fa-twitter fa-lg"></i></a>
+                                                <span class="align-middle">Follow us on Twitter</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <a href="#" class="me-4 text-success"><i class="fab fa-instagram fa-lg"></i></a>
+                                                <span class="align-middle">Follow us on Instagram</span>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <a href="#" class="me-4 text-success"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                                                <span class="align-middle">Follow us on LinkedIn</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="contact-card">
-                        <div class="card-body">
-                            <h3 class="card-title text-success mb-4">Send Us a Message</h3>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" required>
+                            <div class="row mt-5">
+                                <div class="col-md-12">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h4 class="card-title text-success mb-4">Find Us</h4>
+                                            <div style="height: 450px;">
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247290.3576757432!2d120.86532425926808!3d14.432244033681755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9fe311ece61%3A0xfff13cf2f4387bc9!2sUniversity%20of%20Santo%20Tomas%20(UST)!5e0!3m2!1sen!2sph!4v1734357885335!5m2!1sen!2sph" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="subject" class="form-label">Subject</label>
-                                    <input type="text" class="form-control" id="subject" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message" class="form-label">Message</label>
-                                    <textarea class="form-control" id="message" rows="4" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-success">Send Message</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <div class="contact-card">
-                        <div class="card-body">
-                            <h3 class="card-title text-success mb-4">Find Us</h3>
-                            <div style="height: 450px;"> <!-- Reduced height here -->
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2413635383364!2d-73.98678968521566!3d40.748440379326414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1650000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
@@ -276,6 +287,8 @@
             </div>
         </div>
     </section>
+
+
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">

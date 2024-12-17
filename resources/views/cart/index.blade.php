@@ -125,11 +125,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
                             </a>
 
-                            <a class="dropdown-item" href="{{ route('user.orders') }}">
-                                <i class="fas fa-receipt me-2"></i> My Orders
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <!-- Logout Button -->
@@ -175,89 +175,89 @@
     <section class="py-5">
         <div class="container">
             @if($cart->items->isEmpty())
-                <div class="alert alert-info text-center">
-                    <h3>Your cart is empty</h3>
-                    <p>Explore our <a href="{{ route('medication') }}" class="alert-link">medications</a> to add items.</p>
-                </div>
+            <div class="alert alert-info text-center">
+                <h3>Your cart is empty</h3>
+                <p>Explore our <a href="{{ route('medication') }}" class="alert-link">medications</a> to add items.</p>
+            </div>
             @else
-                <div class="row">
-                    <div class="col-md-8">
-                        @foreach($cart->items as $item)
-                            <div class="card mb-3 cart-card shadow">
-                                <div class="card-body d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ $item->image_url }}" alt="{{ $item->medication_name }}"
-                                             class="cart-img rounded me-3">
-                                        <div>
-                                            <h5 class="card-title">{{ $item->medication_name }}</h5>
-                                            <p class="card-text text-muted">Price: ₱{{ number_format($item->price, 2) }}</p>
-                                            <p class="card-text text-muted text-capitalize">
-                                                Type: {{ str_replace('-', ' ', $item->medication_type) }}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex align-items-center">
-                                        <form action="{{ route('cart.update', $item->id) }}" method="POST" class="me-2">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="number" name="quantity" value="{{ $item->quantity }}"
-                                                   min="1" max="10" class="form-control form-control-sm"
-                                                   style="width: 70px;" onchange="this.form.submit()">
-                                        </form>
-
-                                        <form action="{{ route('cart.remove', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fas fa-trash me-1"></i> Remove
-                                            </button>
-                                        </form>
-                                    </div>
+            <div class="row">
+                <div class="col-md-8">
+                    @foreach($cart->items as $item)
+                    <div class="card mb-3 cart-card shadow">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ $item->image_url }}" alt="{{ $item->medication_name }}"
+                                    class="cart-img rounded me-3">
+                                <div>
+                                    <h5 class="card-title">{{ $item->medication_name }}</h5>
+                                    <p class="card-text text-muted">Price: ₱{{ number_format($item->price, 2) }}</p>
+                                    <p class="card-text text-muted text-capitalize">
+                                        Type: {{ str_replace('-', ' ', $item->medication_type) }}
+                                    </p>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                    @if(!$cart->items->isEmpty())
-                    <div class="col-md-4">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <h4 class="card-title mb-4">Cart Summary</h4>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Total Items:</span>
-                                    <strong>{{ $cart->items->sum('quantity') }}</strong>
-                                </div>
-                                <div class="d-flex justify-content-between mb-3">
-                                    <span>Total Cost:</span>
-                                    <strong>₱{{ number_format($cart->total, 2) }}</strong>
-                                </div>
 
-                                <form action="{{ route('order.checkout') }}" method="POST">
+                            <div class="d-flex align-items-center">
+                                <form action="{{ route('cart.update', $item->id) }}" method="POST" class="me-2">
                                     @csrf
-                                    <div class="mb-3">
-                                        <label for="payment_method" class="form-label">Payment Method</label>
-                                        <select name="payment_method" id="payment_method" class="form-select" required>
-                                            <option value="">Select Payment Method</option>
-                                            <option value="cash">Cash on Delivery</option>
-                                            <option value="credit_card">Credit Card</option>
-                                            <option value="paypal">PayPal</option>
-                                        </select>
-                                    </div>
+                                    @method('PATCH')
+                                    <input type="number" name="quantity" value="{{ $item->quantity }}"
+                                        min="1" max="10" class="form-control form-control-sm"
+                                        style="width: 70px;" onchange="this.form.submit()">
+                                </form>
 
-                                    <div class="mb-3">
-                                        <label for="shipping_address" class="form-label">Shipping Address</label>
-                                        <textarea name="shipping_address" id="shipping_address" class="form-control" required></textarea>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-success w-100">
-                                        <i class="fas fa-shopping-cart me-2"></i> Place Order
+                                <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash me-1"></i> Remove
                                     </button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    @endif
+                    @endforeach
                 </div>
+                @if(!$cart->items->isEmpty())
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Cart Summary</h4>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total Items:</span>
+                                <strong>{{ $cart->items->sum('quantity') }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Total Cost:</span>
+                                <strong>₱{{ number_format($cart->total, 2) }}</strong>
+                            </div>
+
+                            <form action="{{ route('order.checkout') }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="payment_method" class="form-label">Payment Method</label>
+                                    <select name="payment_method" id="payment_method" class="form-select" required>
+                                        <option value="">Select Payment Method</option>
+                                        <option value="cash">Cash on Delivery</option>
+                                        <option value="credit_card">Credit Card</option>
+                                        <option value="paypal">PayPal</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="shipping_address" class="form-label">Shipping Address</label>
+                                    <textarea name="shipping_address" id="shipping_address" class="form-control" required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="fas fa-shopping-cart me-2"></i> Place Order
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
             @endif
         </div>
     </section>

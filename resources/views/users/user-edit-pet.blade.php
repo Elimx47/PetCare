@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetCare - Add a Pet for Adoption</title>
+    <title>PetCare - Edit Pet Details</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <!-- Custom CSS -->
+
     <style>
         .navbar {
             background-color: #f7f7f7;
@@ -133,6 +133,7 @@
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
                                 <i class="fas fa-receipt me-2"></i> My Orders
                             </a>
+
                             <!-- Logout Button -->
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
@@ -154,6 +155,8 @@
                     @endauth
                     @endif
                 </ul>
+
+
             </div>
         </div>
     </nav>
@@ -164,21 +167,21 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="hero-content">
-                        <h1 class="display-4 fw-bold">Add a Pet for Adoption</h1>
-                        <p class="lead">Help a pet find their forever home by listing them for adoption.</p>
+                        <h1 class="display-4 fw-bold">Edit Pet Details</h1>
+                        <p class="lead">Update the information for {{ $pets->name }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Add Pet Form Section -->
+    <!-- Edit Pet Form Section -->
     <section class="form-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="form-container">
-                        <h2 class="text-center mb-4">Pet Information</h2>
+                        <h2 class="text-center mb-4">Edit Pet Information</h2>
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -188,21 +191,21 @@
                             </ul>
                         </div>
                         @endif
-                        <form action="{{route('user-store.post')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('user-update-pet', ['id' => $pets->id]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="petName" class="form-label">Pet Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="petName" name="name" value="{{ old('name') }}">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="petName" name="name" value="{{ old('name', $pets->name) }}">
                                 </div>
-                                <div class=" col-md-6">
+                                <div class="col-md-6">
                                     <label for="petType" class="form-label">Pet Type</label>
-                                    <select class="form-select @error('type') is-invalid @enderror" id="petType" name="type" value="{{ old('type') }}">
-                                        <option value="">Select pet type</option>
-                                        <option value="Dog">Dog</option>
-                                        <option value="Cat">Cat</option>
-                                        <option value="Bird">Bird</option>
-                                        <option value="Rabbit">Rabbit</option>
+                                    <select class="form-select @error('type') is-invalid @enderror" id="petType" name="type">
+                                        <option value="Dog" {{ old('type', $pets->type) == 'Dog' ? 'selected' : '' }}>Dog</option>
+                                        <option value="Cat" {{ old('type', $pets->type) == 'Cat' ? 'selected' : '' }}>Cat</option>
+                                        <option value="Bird" {{ old('type', $pets->type) == 'Bird' ? 'selected' : '' }}>Bird</option>
+                                        <option value="Rabbit" {{ old('type', $pets->type) == 'Rabbit' ? 'selected' : '' }}>Rabbit</option>
                                     </select>
                                 </div>
                             </div>
@@ -210,39 +213,44 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="petBreed" class="form-label">Breed</label>
-                                    <input type="text" class="form-control @error('breed') is-invalid @enderror" id="petBreed" name="breed" value="{{ old('breed') }}">
+                                    <input type="text" class="form-control @error('breed') is-invalid @enderror" id="petBreed" name="breed" value="{{ old('breed', $pets->breed) }}">
                                 </div>
-                                <div class=" col-md-3">
+                                <div class="col-md-3">
                                     <label for="petAge" class="form-label">Age</label>
-                                    <input type="number" class="form-control @error('age') is-invalid @enderror" id="petAge" name="age" value="{{ old('age') }}">
+                                    <input type="number" class="form-control @error('age') is-invalid @enderror" id="petAge" name="age" value="{{ old('age', $pets->age) }}">
                                 </div>
-                                <div class=" col-md-3">
+                                <div class="col-md-3">
                                     <label for="petGender" class="form-label">Gender</label>
-                                    <select class="form-select @error('gender') is-invalid @enderror" id="petGender" name="gender" value="{{ old('gender') }}">
-                                        <option value="">Select gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                    <select class="form-select @error('gender') is-invalid @enderror" id="petGender" name="gender">
+                                        <option value="Male" {{ old('gender', $pets->gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                                        <option value="Female" {{ old('gender', $pets->gender) == 'Female' ? 'selected' : '' }}>Female</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="petDescription" class="form-label">Description</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="petDescription" name="description" rows="4">{{ old('description') }}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="petDescription" name="description" rows="4">{{ old('description', $pets->description) }}</textarea>
                             </div>
 
                             <div class="mb-3">
                                 <label for="petHealth" class="form-label">Pet Health</label>
-                                <textarea class="form-control @error('health') is-invalid @enderror" id="petHealth" name="health" rows="4">{{ old('health') }}</textarea>
+                                <textarea class="form-control @error('health') is-invalid @enderror" id="petHealth" name="health" rows="4">{{ old('health', $pets->health) }}</textarea>
                             </div>
 
-                            <div class=" mb-3">
-                                <label for="petImage" class="form-label">Pet Image</label>
+                            <div class="mb-3">
+                                <label for="petImage" class="form-label">Pet Image (Optional)</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="petImage" name="image">
+                                @if($pets->image)
+                                <div class="mt-2">
+                                    <small>Current Image:</small>
+                                    <img src="{{ Str::startsWith($pets->image, 'http') ? $pets->image : asset('storage/' . $pets->image) }}" alt="{{ $pets->name }}" class="img-thumbnail" style="max-width: 200px;">
+                                </div>
+                                @endif
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success btn-lg">Submit Pet for Adoption</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Update Pet Details</button>
                             </div>
                         </form>
                     </div>
@@ -253,36 +261,7 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>About PetCare</h5>
-                    <p>PetCare is dedicated to connecting loving homes with pets in need and providing top-quality pet care products and services.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('welcome') }}" class="text-white">Home</a></li>
-                        <li><a href="{{ route('pet-adopt') }}" class="text-white">Adoption</a></li>
-                        <li><a href="{{ route('medication') }}" class="text-white">Medication</a></li>
-                        <li><a href="{{ route('about') }}" class="text-white">About</a></li>
-                        <li><a href="{{ route('contact') }}" class="text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact Us</h5>
-                    <address>
-                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Pet Street, Anytown, ST 12345</p>
-                        <p><i class="fas fa-phone me-2"></i> (123) 456-7890</p>
-                        <p><i class="fas fa-envelope me-2"></i> info@petcare.com</p>
-                    </address>
-                </div>
-            </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; 2024 PetCare. All Rights Reserved.</p>
-            </div>
-        </div>
+        <!-- Copy the existing footer from the add pet form -->
     </footer>
 
     <!-- Bootstrap JS and Popper.js -->

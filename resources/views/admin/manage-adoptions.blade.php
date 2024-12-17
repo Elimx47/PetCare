@@ -12,6 +12,18 @@
         .dropdown-item:hover {
             background-color: lightgreen;
         }
+
+        .document-preview {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #f8f9fa;
+            border-color: #dee2e6 #dee2e6 #f8f9fa;
+        }
     </style>
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -80,18 +92,9 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $application->id }}">
                                                     <li>
-                                                        <a href="{{ asset('storage/' . $application->id_proof_path) }}"
-                                                            target="_blank"
-                                                            class="dropdown-item">
-                                                            <i class="bi bi-file-earmark-person"></i> View ID Proof
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ asset('storage/' . $application->income_proof_path) }}"
-                                                            target="_blank"
-                                                            class="dropdown-item">
-                                                            <i class="bi bi-file-earmark-text"></i> View Income Proof
-                                                        </a>
+                                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#documentsModal{{ $application->id }}">
+                                                            <i class="bi bi-file-earmark-text"></i> View Documents
+                                                        </button>
                                                     </li>
                                                     <li>
                                                         <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#applicationDetailsModal{{ $application->id }}">
@@ -135,38 +138,94 @@
 
                                     <!-- Application Details Modal -->
                                     <div class="modal fade" id="applicationDetailsModal{{ $application->id }}" tabindex="-1">
-                                        <div class="modal-dialog modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Adoption Application Details</h5>
+                                                <div class="modal-header bg-light">
+                                                    <h5 class="modal-title text-primary">
+                                                        <i class="bi bi-person-vcard me-2"></i>Adoption Application Details
+                                                    </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="row">
+                                                    <div class="row g-4">
                                                         <div class="col-md-6">
-                                                            <h5>Applicant Information</h5>
-                                                            <p><strong>Full Name:</strong> {{ $application->full_name }}</p>
-                                                            <p><strong>Contact Number:</strong> {{ $application->contact_number }}</p>
-                                                            <p><strong>Address:</strong> {{ $application->address }}</p>
+                                                            <div class="card h-100 border-primary">
+                                                                <div class="card-header bg-primary text-white">
+                                                                    <i class="bi bi-person-lines-fill me-2"></i>Applicant Information
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <p class="mb-2"><strong>Full Name:</strong> {{ $application->full_name }}</p>
+                                                                    <p class="mb-2"><strong>Contact Number:</strong> {{ $application->contact_number }}</p>
+                                                                    <p class="mb-0"><strong>Address:</strong> {{ $application->address }}</p>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <h5>Pet Information</h5>
-                                                            <p><strong>Pet Name:</strong> {{ $application->pet->name }}</p>
-                                                            <p><strong>Health:</strong> {{ $application->pet->health }}</p>
-                                                            <p><strong>Breed:</strong> {{ $application->pet->breed }}</p>
+                                                            <div class="card h-100 border-success">
+                                                                <div class="card-header bg-success text-white">
+                                                                    <i class="bi bi-info-circle me-2"></i>Pet Information
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <p class="mb-2"><strong>Pet Name:</strong> {{ $application->pet->name }}</p>
+                                                                    <p class="mb-2"><strong>Health:</strong> {{ $application->pet->health }}</p>
+                                                                    <p class="mb-0"><strong>Breed:</strong> {{ $application->pet->breed }}</p>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     @if($application->additional_info)
-                                                    <div class="row mt-3">
-                                                        <div class="col-12">
-                                                            <h6>Additional Information</h6>
-                                                            <p>{{ $application->additional_info }}</p>
+                                                    <div class="card mt-3 border-warning">
+                                                        <div class="card-header bg-warning text-dark">
+                                                            <i class="bi bi-info-square me-2"></i>Additional Information
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <p class="mb-0">{{ $application->additional_info }}</p>
                                                         </div>
                                                     </div>
                                                     @endif
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Documents Modal -->
+                                    <div class="modal fade" id="documentsModal{{ $application->id }}" tabindex="-1">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Application Documents</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="nav nav-tabs" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" data-bs-toggle="tab" href="#idProof{{ $application->id }}">ID Proof</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" data-bs-toggle="tab" href="#incomeProof{{ $application->id }}">Income Proof</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content mt-3">
+                                                        <div class="tab-pane fade show active" id="idProof{{ $application->id }}">
+                                                            <iframe src="{{ asset('storage/' . $application->id_proof_path) }}" class="document-preview"></iframe>
+                                                            <div class="mt-2">
+                                                                <a href="{{ asset('storage/' . $application->id_proof_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                                    <i class="bi bi-box-arrow-up-right"></i> Open in New Tab
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="incomeProof{{ $application->id }}">
+                                                            <iframe src="{{ asset('storage/' . $application->income_proof_path) }}" class="document-preview"></iframe>
+                                                            <div class="mt-2">
+                                                                <a href="{{ asset('storage/' . $application->income_proof_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                                    <i class="bi bi-box-arrow-up-right"></i> Open in New Tab
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

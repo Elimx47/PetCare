@@ -139,13 +139,16 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
                                 <i class="fas fa-receipt me-2"></i> My Orders
                             </a>
-
                             <!-- Logout Button -->
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
@@ -207,9 +210,13 @@
                     <p>{{ $pets->description }}</p>
                     @if ($pets->hasApplied)
                     <button class="btn btn-secondary btn-lg adopt-btn mt-4" disabled>Already Applied</button>
+                    @elseif ($pets->isUploadedByCurrentUser)
+                    <a href="{{ route('userEditPet', ['id' => $pets->id]) }}" class="btn btn-primary btn-lg edit-btn mt-4">
+                        Edit Pet Details
+                    </a>
                     @else
                     <button type="button"
-                        class="btn btn-success"
+                        class="btn btn-success btn-lg adopt-btn mt-4"
                         data-bs-toggle="modal"
                         data-bs-target="#adoptPetModal{{ $pets->id }}"
                         onclick="document.getElementById('petId').value = '{{ $pets->id }}'">

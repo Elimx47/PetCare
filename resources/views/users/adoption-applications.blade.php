@@ -41,8 +41,9 @@
 
         .document-preview {
             width: 100%;
-            height: 600px;
-            border: none;
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
 
         .table> :not(caption)>*>* {
@@ -157,7 +158,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
@@ -229,6 +234,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $application->created_at->format('M d, Y') }}</td>
+                                @if($application->pet->status == 'Pending')
                                 <td>
                                     <h5><span class="badge rounded-pill
                                         @if($application->status == 'Pending') text-bg-warning
@@ -238,6 +244,13 @@
                                             {{ $application->status }}
                                         </span></h5>
                                 </td>
+                                @elseif($application->pet->status== 'Adopted')
+                                <td>
+                                    <h5><span class="badge rounded-pill text-bg-info">
+                                            Adopted by other user
+                                        </span></h5>
+                                </td>
+                                @endif
                                 <td>
                                     <div class="dropdown position-static">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ $application->id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -288,10 +301,16 @@
                                                         <div class="tab-pane fade show active" id="idProof{{ $application->id }}">
                                                             <iframe src="{{ asset('storage/' . $application->id_proof_path) }}"
                                                                 class="document-preview"></iframe>
+                                                            <a href="{{ asset('storage/' . $application->id_proof_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open in New Tab
+                                                            </a>
                                                         </div>
                                                         <div class="tab-pane fade" id="incomeProof{{ $application->id }}">
                                                             <iframe src="{{ asset('storage/' . $application->income_proof_path) }}"
                                                                 class="document-preview"></iframe>
+                                                            <a href="{{ asset('storage/' . $application->income_proof_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open in New Tab
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -313,7 +332,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <form action="" method="POST">
+                                                    <form action="{{ route('adoption.cancel', $application->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger">Confirm Cancel</button>

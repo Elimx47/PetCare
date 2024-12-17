@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
         .pet-card {
-            transition: all 0.3s ease;
+            text-decoration: none;
+            transition: transform 0.2s ease;
         }
 
         .pet-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03);
         }
+
 
         .pet-img {
             width: 100%;
@@ -138,7 +139,11 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
@@ -189,30 +194,43 @@
             <a href="{{ route('userAddPet') }}" class="btn btn-primary px-4">Add a Pet</a>
         </div>
         @else
-        <div class="row g-4">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
             @foreach($pets as $pet)
-            <div class="col-12 col-md-6 col-lg-4">
-                <a href="{{ route('pets.show', $pet->id) }}" class="pet-card">
-                    <div class="card h-100 border-0 rounded-3 shadow-sm">
-                        @if($pet->image)
-                        <img src="{{ Str::startsWith($pet->image, 'http') ? $pet->image : ($pet->image ? asset('storage/' . $pet->image) : asset('images/default-pet.jpg')) }}" class="img-fluid rounded-start h-100 object-fit-cover" alt="{{ $pet->name }}">
-                        @else
-                        <div class="pet-img bg-secondary d-flex align-items-center justify-content-center">
-                            <span class="text-white">No Image</span>
-                        </div>
-                        @endif
-                        <div class="card-body">
-                            <h2 class="h5 fw-bold text-gray-800">{{ $pet->name }}</h2>
-                            <p class="text-muted mb-2">{{ $pet->breed }}</p>
-                            <div class="mb-2">
-                                <span class="badge bg-light text-dark me-2">{{ $pet->age }} {{ Str::plural('year', $pet->age) }}</span>
-                                <span class="badge bg-light text-dark">{{ $pet->gender }}</span>
+            <div class="col">
+                <a href="{{ route('pets.show', $pet->id) }}" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="row g-0 h-100">
+                            <div class="col-md-4" style="height: 200px;">
+                                @if($pet->image)
+                                <img src="{{ Str::startsWith($pet->image, 'http') ? $pet->image : asset('storage/' . $pet->image) }}"
+                                    class="img-fluid w-100 h-100 object-fit-cover"
+                                    alt="{{ $pet->name }}">
+                                @else
+                                <div class="bg-secondary d-flex align-items-center justify-content-center h-100">
+                                    <span class="text-white fs-4">No Image</span>
+                                </div>
+                                @endif
                             </div>
-                            <div class="mb-2">
-                                <span class="status-badge {{ $pet->status === 'Pending' ? 'status-pending' : 'status-approved' }}">Status: {{ $pet->status }}</span>
-                            </div>
-                            <div>
-                                <span class="status-badge {{ $pet->approved ? 'status-approved' : 'status-not-approved' }}">{{ $pet->approved ? 'Approved' : 'Pending Approval' }}</span>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $pet->name }}</h5>
+                                    <p class="card-text">{{ $pet->breed }}</p>
+                                    <div class="mb-2">
+                                        <span class="badge bg-primary text-white me-2">{{ $pet->age }} {{ Str::plural('year', $pet->age) }}</span>
+                                        <span class="badge bg-warning text-dark">{{ $pet->gender }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="status-badge {{ $pet->status === 'Pending' ? 'status-pending' : 'status-approved' }} me-3">
+                                            <i class="fa {{ $pet->status === 'Pending' ? 'fa-clock' : 'fa-check-circle' }} me-1"></i>
+                                            Adopted: {{ $pet->status }}
+                                        </span>
+                                        <span class="status-badge {{ $pet->approved ? 'status-approved' : 'status-not-approved' }}">
+                                            <i class="fa {{ $pet->approved ? 'fa-check-circle' : 'fa-times-circle' }} me-1"></i>
+                                            Approved: {{ $pet->approved ? 'Yes' : 'No' }}
+                                        </span>
+                                    </div>
+                                    <p class="card-text"><small class="text-body-secondary">Created at {{$pet->created_at}}</small></p>
+                                </div>
                             </div>
                         </div>
                     </div>

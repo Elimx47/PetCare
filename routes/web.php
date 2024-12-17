@@ -46,6 +46,13 @@ Route::middleware('isUser:user')->group(function () {
 
     Route::get('/adoption-application', [AdoptionController::class, 'viewAdoptionApplications'])->name('user.adoption.applications');
 
+    Route::delete('/adoption-applications/{id}/cancel', [AdoptionController::class, 'cancelApplication'])
+        ->name('adoption.cancel');
+
+    Route::get('/user/edit-pet/{id}', [PetController::class, 'userEdit'])->name('userEditPet');
+    Route::put('/user/update-pet/{id}', [PetController::class, 'userUpdate'])->name('user-update-pet');
+
+
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
@@ -89,6 +96,12 @@ Route::middleware([
 
     Route::put('/pets/{id}/edit-pet', [PetController::class, 'update'])->name('adminUpdatePet');
 
+    Route::patch('/admin/pet/{id}/approve', [PetController::class, 'approvePet'])->name('admin.pet.approve');
+    Route::patch('/admin/pet/{id}/reject', [PetController::class, 'rejectPet'])->name('admin.pet.reject');
+
+    Route::get('/admin/users/{id}', [AdminController::class, 'showUserDetails'])->name('userDetails');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('deleteUser');
+
     Route::get('/user', [UserController::class, 'index']);
 
     Route::get('/create', [UserController::class, 'create']);
@@ -102,16 +115,14 @@ Route::middleware([
     Route::patch('/admin/adoptions/{id}/reject', [AdoptionController::class, 'rejectAdoption'])
         ->name('admin.adoption.reject');
 
-        Route::get('/admin/orders', [AdminOrderController::class, 'index'])
-         ->name('admin.orders.index');
+    Route::get('/admin/orders', [AdminOrderController::class, 'index'])
+        ->name('admin.orders.index');
 
     Route::get('/admin/orders/{id}', [AdminOrderController::class, 'show'])
-         ->name('admin.orders.show');
+        ->name('admin.orders.show');
 
     Route::patch('/admin/orders/{id}/update-status', [AdminOrderController::class, 'updateStatus'])
-         ->name('admin.orders.update-status');
-
-
+        ->name('admin.orders.update-status');
 });
 
 Route::get('/home', [LoginController::class, 'index'])->name('home');

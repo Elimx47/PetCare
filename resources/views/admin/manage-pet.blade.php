@@ -7,8 +7,6 @@
                         <h1 class="text-3xl font-semibold mb-4 text-gray-800">Manage Pet Adoptions</h1>
 
                         <!-- Search Bar -->
-
-
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="d-flex">
                                 <a href="{{ route('adminAddPet') }}" class="btn btn-primary me-2" title="Add Pet">
@@ -52,7 +50,7 @@
                                         <th>Pet Name</th>
                                         <th>Created by</th>
                                         <th class="text-center">Actions</th>
-                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Adopted?</th>
                                         <th class="text-center">Approved?</th>
                                         <th>Created at</th>
                                         <th>Updated at</th>
@@ -73,10 +71,55 @@
                                             <a href="{{ route('admin-pets.show', ['id' => $pet->id]) }}" class="btn btn-info btn-sm" title="Show Details">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('adminEditPet', ['id' => $pet->id]) }}" class="btn btn-warning btn-sm" title="Edit"
-                                                @if($pet->status == 'Adopted') style="pointer-events: none; opacity: 0.5;" @endif>
+
+                                            @if($pet->status == 'Adopted')
+                                            {{-- Disable actions for adopted pets --}}
+                                            <button class="btn btn-warning btn-sm" title="Cannot Edit" disabled>
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            @else
+                                            @if($pet->user->role === 'admin')
+                                            {{-- Direct edit for admin-created pets --}}
+                                            <a href="{{ route('adminEditPet', ['id' => $pet->id]) }}" class="btn btn-warning btn-sm" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
+                                            @else
+                                            @if($pet->user->role !== 'admin')
+                                            {{-- Dropdown for user-created pets --}}
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-warning dropdown-toggle btn-sm" type="button" id="petActionDropdown{{ $pet->id }}" data-bs-toggle="dropdown" aria-expanded="false"
+                                                    @if($pet->approved == 1) disabled @endif>
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="petActionDropdown{{ $pet->id }}">
+                                                    @if($pet->approved == 0)
+                                                    <li>
+                                                        <form action="{{ route('admin.pet.approve', ['id' => $pet->id]) }}" method="POST" class="dropdown-item">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit" class="btn btn-link p-0 text-success"
+                                                                @if($pet->approved == 1) disabled @endif>
+                                                                <i class="bi bi-check-circle"></i> Approve Pet
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('admin.pet.reject', ['id' => $pet->id]) }}" method="POST" class="dropdown-item">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit" class="btn btn-link p-0 text-danger"
+                                                                @if($pet->approved == 1) disabled @endif>
+                                                                <i class="bi bi-x-circle"></i> Reject Pet
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                            @endif
+                                            @endif
+                                            @endif
+
                                             <form action="{{ route('adminDeletePet', ['id' => $pet->id]) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -111,4 +154,6 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </x-app-layout>

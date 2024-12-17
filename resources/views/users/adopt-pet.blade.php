@@ -167,13 +167,16 @@
                             </a>
 
                             <a class="dropdown-item" href="{{ route('userPets') }}">
-                                <i class="fa-solid fa-paw me-2"></i> Pets
+                                <i class="fa-solid fa-paw me-2"></i>My Pets
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('user.adoption.applications') }}">
+                                <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
                             <a class="dropdown-item" href="{{ route('user.orders') }}">
                                 <i class="fas fa-receipt me-2"></i> My Orders
                             </a>
-
                             <!-- Logout Button -->
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
@@ -251,6 +254,10 @@
                             <a href="{{ route('pets.show', $pet['id']) }}" class="btn btn-secondary">View Details</a>
                             @if ($pet->hasApplied)
                             <button class="btn btn-secondary" disabled>Already Applied</button>
+                            @elseif ($pet->isUploadedByCurrentUser)
+                            <a href="{{ route('userEditPet', ['id' => $pet->id]) }}" class="btn btn-primary">
+                                Edit Pet Details
+                            </a>
                             @else
                             <button type="button"
                                 class="btn btn-success"

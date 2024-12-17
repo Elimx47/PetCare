@@ -19,12 +19,11 @@ class PetController extends Controller
 
         $userId = Auth::id();
 
-        // Map over the pets to add a `hasApplied` property for each
         $pets->getCollection()->transform(function ($pet) use ($userId) {
             $pet->hasApplied = $userId ? $pet->adoptions()->where('user_id', $userId)->exists() : false;
+            $pet->isUploadedByCurrentUser = $pet->user_id === $userId;
             return $pet;
         });
-
 
         return view('users.adopt-pet', compact('pets'));
     }
@@ -39,6 +38,7 @@ class PetController extends Controller
 
         $userId = Auth::id();
         $pets->hasApplied = $userId ? $pets->adoptions()->where('user_id', $userId)->exists() : false;
+        $pets->isUploadedByCurrentUser = $pets->user_id === $userId;
 
         return view('users.pet-details', compact('pets'));
     }
@@ -247,7 +247,7 @@ class PetController extends Controller
 
     public function getPendingPets()
     {
-        $Pending = Pet::where('status', 'Pending')->latest()->take(6)->get();
+        $Pending = Pet::where('status', 'Pending')->latest()->get();
 
         return $Pending;
     }
@@ -279,5 +279,96 @@ class PetController extends Controller
             ->paginate(6);
 
         return view('users.user-pets', compact('pets'));
+    }
+    public function userEdit($id)
+    {
+        $pets = Pet::where('id', $id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if (!$pets) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('users.user-edit-pet', compact('pets'));
+    }
+
+    public function userUpdate(Request $request, $id)
+    {
+        $pet = Pet::where('id', $id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if (!$pet) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|not_regex:/^\s*$/u',
+            'type' => 'required|string|max:255|not_regex:/^\s*$/u',
+            'breed' => 'required|string|max:255|not_regex:/^\s*$/u',
+            'age' => 'required|integer|min:0|max:30',
+            'gender' => 'required|string|in:Male,Female',
+            'health' => 'required|string|max:500|not_regex:/^\s*$/u',
+            'description' => 'required|min:10|max:1000|not_regex:/^\s*$/u',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('pets', 'public');
+            $validated['image'] = $imagePath;
+        }
+
+        $validated['approved'] = 0;;
+
+        $pet->update($validated);
+
+        return redirect()->route('userPets')->with('success', 'Pet details updated successfully');
+    }
+
+    public function approvePet($id)
+    {
+        try {
+            $pet = Pet::findOrFail($id);
+
+            // Check if the pet is already approved
+            if ($pet->approved == 1) {
+                return redirect()->route('pet-manage')
+                    ->with('info', 'Pet is already approved.');
+            }
+
+            // Update the pet's approval status
+            $pet->approved = 1;
+            $pet->save();
+
+            return redirect()->route('pet-manage')
+                ->with('success', "Pet '{$pet->name}' has been approved successfully.");
+        } catch (\Exception $e) {
+            return redirect()->route('pet-manage')
+                ->with('error', 'Failed to approve pet: ' . $e->getMessage());
+        }
+    }
+
+    public function rejectPet($id)
+    {
+        try {
+            $pet = Pet::findOrFail($id);
+
+            // Check if the pet is already rejected (unapproved)
+            if ($pet->approved == 0) {
+                return redirect()->route('pet-manage')
+                    ->with('info', 'Pet is already unapproved.');
+            }
+
+            // Update the pet's approval status
+            $pet->approved = 0;
+            $pet->save();
+
+            return redirect()->route('pet-manage')
+                ->with('success', "Pet '{$pet->name}' has been rejected.");
+        } catch (\Exception $e) {
+            return redirect()->route('pet-manage')
+                ->with('error', 'Failed to reject pet: ' . $e->getMessage());
+        }
     }
 }

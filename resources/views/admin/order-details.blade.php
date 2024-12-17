@@ -39,7 +39,6 @@
                                     <div class="d-flex align-items-center">
                                         <select name="status" class="form-control me-2" style="max-width: 200px;">
                                             <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
                                             <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
                                             <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                         </select>
@@ -68,19 +67,19 @@
                                         <td>
                                             {{ $item->medication_name }}
                                             @if($item->image_url)
-                                                <img src="{{ $item->image_url }}" alt="{{ $item->medication_name }}"
-                                                     style="max-width: 50px; max-height: 50px; margin-left: 10px;">
+                                            <img src="{{ $item->image_url }}" alt="{{ $item->medication_name }}"
+                                                style="max-width: 50px; max-height: 50px; margin-left: 10px;">
                                             @endif
                                         </td>
                                         <td>{{ $item->medication_type }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>${{ number_format($item->price, 2) }}</td>
-                                        <td>${{ number_format($item->total_price, 2) }}</td>
+                                        <td>Php {{ number_format($item->price, 2) }}</td>
+                                        <td>Php {{ number_format($item->total_price, 2) }}</td>
                                     </tr>
                                     @endforeach
                                     <tr class="table-active">
                                         <td colspan="4" class="text-end"><strong>Total Order Amount:</strong></td>
-                                        <td><strong>${{ number_format($order->total_amount, 2) }}</strong></td>
+                                        <td><strong>Php {{ number_format($order->total_amount, 2) }}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
