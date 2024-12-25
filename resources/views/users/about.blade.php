@@ -154,6 +154,10 @@
             font-weight: 900;
             color: white;
         }
+        .col-md-4{
+            width: 25%;
+        }
+
     </style>
 </head>
 
@@ -291,56 +295,31 @@
             <!-- Team Carousel -->
             <h2 class="text-center mb-5">Meet Our Dedicated Team</h2>
             <div id="teamCarousel" class="carousel slide team-carousel" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
+                
                         <div class="row text-center">
                             <div class="col-md-4">
-                                <img src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt="Evander Villanueva">
+                                <img src="https://cdn.discordapp.com/attachments/626778610992283669/1321472510625189888/469286789_2662178097323758_141968885426291571_n.png?ex=676d5cae&is=676c0b2e&hm=d355b1ccfd88784e2c95c8c4d5bfcc8741729194bfae54c6be2742a6bf6897ca&" alt="Evander Villanueva">
                                 <h4 class="mb-2">Evander Villanueva</h4>
                                 <p class="text-muted">Chief Veterinary Officer</p>
                             </div>
                             <div class="col-md-4">
-                                <img src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt="Ivan Virgo">
-                                <h4 class="mb-2">Ivan Virgo</h4>
-                                <p class="text-muted">Pet Behavior Specialist</p>
-                            </div>
-                            <div class="col-md-4">
-                                <img src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt="John Drefner">
-                                <h4 class="mb-2">John Drefner</h4>
+                                <img src="https://cdn.discordapp.com/attachments/626778610992283669/1321472181896740884/82c53968-2484-415a-93ed-ed9ef038beef.png?ex=676d5c5f&is=676c0adf&hm=480f1d2f0f2a9af40979c4b4f8ee56620136c709efa1202953a62d5ccf5cb32b&" alt="John Drefner">
+                                <h4 class="mb-2">Jan Drefner</h4>
                                 <p class="text-muted">Adoption Coordinator</p>
                             </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row text-center">
                             <div class="col-md-4">
-                                <img src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt="Mark Alicante">
+                                <img src="https://cdn.discordapp.com/attachments/626778610992283669/1321472400868507678/c7fa6420-6258-406f-adce-e72b92df3ac7.png?ex=676d5c94&is=676c0b14&hm=fe6257a11a34607233d8132c8ac3fea71915b27aecabcf6d07143abdb584d012&" alt="Mark Alicante">
                                 <h4 class="mb-2">Mark Alicante</h4>
                                 <p class="text-muted">Animal Nutrition Expert</p>
                             </div>
                             <div class="col-md-4">
-                                <img src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt="Zyke Victoria">
+                                <img src="https://cdn.discordapp.com/attachments/626778610992283669/1321472424830570496/3a04b3ad-46ad-4d36-bc77-7c6e4e09cc8a.png?ex=676d5c99&is=676c0b19&hm=aa41a1488ca2db0b7d62c7c2bd63666b9cef529bdb6c379e103e61552973d05e&" alt="Zyke Victoria">
                                 <h4 class="mb-2">Zyke Victoria</h4>
                                 <p class="text-muted">Shelter Operations Manager</p>
                             </div>
-                            <div class="col-md-4">
-                                <img src="https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" alt="Jayce Magdalene">
-                                <h4 class="mb-2">Lebron James</h4>
-                                <p class="text-muted">Pet Whispherer</p>
-                            </div>
                         </div>
-                    </div>
-                    <!-- Add more carousel items if needed -->
-                </div>
-                <!-- Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#teamCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#teamCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+
+
             </div>
         </div>
     </section>

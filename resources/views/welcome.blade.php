@@ -73,6 +73,14 @@
         .dropdown-item:hover {
             background-color: lightgreen;
         }
+
+        .card-service{
+            object-fit: cover;
+            max-height: 275px;
+            max-width: 415px;
+            height:100%;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -187,7 +195,7 @@
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Adoption">
+                        <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" class="card-img-top card-service" alt="Adoption">
                         <div class="card-body">
                             <h5 class="card-title">Pet Adoption</h5>
                             <p class="card-text">Find your perfect pet from our wide range of available animals. We have dogs, cats, rabbits, and more!</p>
@@ -197,7 +205,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Medication">
+                        <img src="https://images.unsplash.com/photo-1512678080530-7760d81faba6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" class="card-img-top card-service" alt="Medication">
                         <div class="card-body">
                             <h5 class="card-title">Buy Medication</h5>
                             <p class="card-text">Purchase high-quality medication to keep your pets healthy and happy. We offer a wide range of veterinary-approved products.</p>
@@ -207,7 +215,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1581888227599-779811939961?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="Support">
+                        <img src="https://images.unsplash.com/photo-1581888227599-779811939961?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" class="card-img-top card-service" alt="Support">
                         <div class="card-body">
                             <h5 class="card-title">24/7 Support</h5>
                             <p class="card-text">We're here to help with any questions or concerns you may have. Our expert team is available around the clock.</p>
