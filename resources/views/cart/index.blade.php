@@ -132,6 +132,10 @@
                                 <i class="fa-solid fa-file-lines me-2"></i>My Applications
                             </a>
 
+                            <a class="dropdown-item" href="{{ route('user.orders') }}">
+                                <i class="fas fa-receipt me-2"></i> My Orders
+                            </a>
+
                             <!-- Logout Button -->
                             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
