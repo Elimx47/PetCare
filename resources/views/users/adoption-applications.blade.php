@@ -234,23 +234,29 @@
                                     </div>
                                 </td>
                                 <td>{{ $application->created_at->format('M d, Y') }}</td>
-                                @if($application->pet->status == 'Pending')
                                 <td>
-                                    <h5><span class="badge rounded-pill
-                                        @if($application->status == 'Pending') text-bg-warning
-                                        @elseif($application->status == 'Approved') text-bg-success
-                                        @elseif($application->status == 'Rejected') text-bg-danger
-                                        @endif ">
-                                            {{ $application->status }}
-                                        </span></h5>
-                                </td>
-                                @elseif($application->pet->status== 'Adopted')
-                                <td>
-                                    <h5><span class="badge rounded-pill text-bg-info">
+                                    <h5>
+                                        @if($application->pet->status == 'Adopted')
+                                        @if($application->user_id == Auth::id() && $application->status == 'Approved')
+                                        <span class="badge rounded-pill text-bg-success">
+                                            Approved
+                                        </span>
+                                        @else
+                                        <span class="badge rounded-pill text-bg-info">
                                             Adopted by other user
-                                        </span></h5>
+                                        </span>
+                                        @endif
+                                        @else
+                                        <span class="badge rounded-pill 
+                @if($application->status == 'Pending') text-bg-warning
+                @elseif($application->status == 'Approved') text-bg-success
+                @elseif($application->status == 'Rejected') text-bg-danger
+                @endif">
+                                            {{ $application->status }}
+                                        </span>
+                                        @endif
+                                    </h5>
                                 </td>
-                                @endif
                                 <td>
                                     <div class="dropdown position-static">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ $application->id }}" data-bs-toggle="dropdown" aria-expanded="false">
